@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Destination;
 use App\Http\Requests\StoreDestinationRequest;
 use App\Http\Requests\UpdateDestinationRequest;
+use Illuminate\Http\Request;
 
 class DestinationController extends Controller
 {
@@ -17,6 +18,12 @@ class DestinationController extends Controller
         return response()->json($destination);
     }
 
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+        $destinations = Destination::where('name', 'LIKE', "%{$query}%")->get();
+        return response()->json($destinations);
+    }
     /**
      * Show the form for creating a new resource.
      */
